@@ -72,7 +72,7 @@ namespace Api_Project.Controllers
             return Ok(Student);
         }
 
-        [HttpPost("AddStudent", Name ="AddStudent")]
+        [HttpPost( Name ="AddStudent")]
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,8 +87,8 @@ namespace Api_Project.Controllers
             return CreatedAtRoute("GetStudentById", new { StudentId = newStudent.Id }, newStudent);
         }
 
-
         [HttpDelete("{StudentId}", Name ="DeleteStudent")]
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -108,5 +108,35 @@ namespace Api_Project.Controllers
             StudentsDataSimulation.studentsList.Remove(s);
             return Ok($"Student whit ID {StudentId} has been deleted");
         }
+
+        [HttpPut("{id}", Name = "UpdateStudent")]
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Student> UpdateStudent(int id, Student updatedStudent)
+        {
+            if (id < 1 || updatedStudent == null || string.IsNullOrEmpty(updatedStudent.Name) || updatedStudent.Age < 0 || updatedStudent.Grade < 0)
+            {
+                return BadRequest("Invalid student data.");
+            }
+
+            var student = StudentsDataSimulation.studentsList.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return NotFound($"Student with ID {id} not found.");
+            }
+
+            student.Name = updatedStudent.Name;
+            student.Age = updatedStudent.Age;
+            student.Grade = updatedStudent.Grade;
+
+            return Ok(student);
+        }
+
+
+
+
+
     }
 }
