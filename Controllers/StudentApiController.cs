@@ -23,5 +23,16 @@ namespace Api_Project.Controllers
             var PassedStudent = StudentsDataSimulation.studentsList.Where(Student => Student.Grade >= 10).ToList();
             return Ok(PassedStudent);
         }
+
+        [HttpGet("AverageGrade",Name = "GetAverageGrade")]
+        public ActionResult<double> GetAverageGrades()
+        {
+            if (StudentsDataSimulation.studentsList.Count==0)
+            {
+                return NotFound("No Student Found");
+            }
+            var Average = StudentsDataSimulation.studentsList.Average(Student => Student.Grade);
+            return Ok(Average);
+        }
     }
 }
