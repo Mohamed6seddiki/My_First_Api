@@ -72,7 +72,7 @@ namespace Api_Project.Controllers
             return Ok(Student);
         }
 
-        [HttpPost(Name ="AddStudent")]
+        [HttpPost("AddStudent", Name ="AddStudent")]
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,6 +85,28 @@ namespace Api_Project.Controllers
             newStudent.Id = StudentsDataSimulation.studentsList.Count > 0 ? StudentsDataSimulation.studentsList.Max(s => s.Id) + 1 : 1;
             StudentsDataSimulation.studentsList.Add(newStudent);
             return CreatedAtRoute("GetStudentById", new { StudentId = newStudent.Id }, newStudent);
+        }
+
+
+        [HttpDelete("{StudentId}", Name ="DeleteStudent")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Student> DeleteStudentById(int StudentId)
+        {
+            if (StudentId < 1)
+            {
+                return BadRequest($"Not Accepted ID {StudentId}");
+            }
+
+            var s = StudentsDataSimulation.studentsList.FirstOrDefault(Student => Student.Id == StudentId);
+            if (s == null)
+            {
+                return NotFound($"The Id {StudentId} Not Found");
+            }
+
+            StudentsDataSimulation.studentsList.Remove(s);
+            return Ok($"Student whit ID {StudentId} has been deleted");
         }
     }
 }
