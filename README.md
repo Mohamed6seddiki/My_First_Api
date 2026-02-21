@@ -1,20 +1,26 @@
 # My First API 🚀
 
-This is my first Web API built using **ASP.NET Core**.
+This is my first Web API built using ASP.NET Core.
 
 The goal of this project is to learn:
 
-- How to create a RESTful API
+- How to build a RESTful API
 - How routing works
 - How to create Controllers
 - How to handle HTTP requests (GET, POST, PUT, DELETE)
-- How to test endpoints using tools like Postman
+- How to test APIs using Swagger
 
 ## 🛠️ Technologies Used
 
 - ASP.NET Core
 - C#
 - .NET SDK
+- Swagger (OpenAPI)
+
+## 🔐 Security
+
+- The API runs using **HTTPS**
+- Swagger UI is enabled for testing endpoints easily from the browser
 
 ## ▶️ How to Run
 
@@ -30,11 +36,15 @@ The goal of this project is to learn:
 
    dotnet run
 
-The API will start running locally on the configured port.
+After running, open your browser and go to:
+
+- https://localhost:xxxx/swagger
+
+(Replace `xxxx` with the port shown in the console.)
 
 ## 📌 Purpose
 
-This project is created for learning purposes as a beginner step in backend development using ASP.NET Core.
+This project is created for learning purposes as my first step in backend development using ASP.NET Core.
 
 ---
 
