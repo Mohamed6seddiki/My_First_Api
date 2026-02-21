@@ -17,22 +17,38 @@ namespace Api_Project.Controllers
             return Ok(StudentsDataSimulation.studentsList);
         }
 
-        [HttpGet("Passed" ,Name = " GetPassedStudent")]
-        public ActionResult <IEnumerable<Student>> GetPassedStudent()
-        {
-            var PassedStudent = StudentsDataSimulation.studentsList.Where(Student => Student.Grade >= 10).ToList();
-            return Ok(PassedStudent);
-        }
+        //[HttpGet("Passed" ,Name = " GetPassedStudent")]
+        //public ActionResult <IEnumerable<Student>> GetPassedStudent()
+        //{
+        //    var PassedStudent = StudentsDataSimulation.studentsList.Where(Student => Student.Grade >= 10).ToList();
+        //    return Ok(PassedStudent);
+        //}
 
-        [HttpGet("AverageGrade",Name = "GetAverageGrade")]
-        public ActionResult<double> GetAverageGrades()
+        //[HttpGet("AverageGrade",Name = "GetAverageGrade")]
+        //public ActionResult<double> GetAverageGrades()
+        //{
+        //    if (StudentsDataSimulation.studentsList.Count==0)
+        //    {
+        //        return NotFound("No Student Found");
+        //    }
+        //    var Average = StudentsDataSimulation.studentsList.Average(Student => Student.Grade);
+        //    return Ok(Average);
+        //}
+
+        [HttpGet("StudentById/{id}" ,Name = "GetStudentById")]
+        public ActionResult<Student> GetStudentById(int id)
         {
-            if (StudentsDataSimulation.studentsList.Count==0)
+            if(id<1)
             {
-                return NotFound("No Student Found");
+                return BadRequest($"Not Accepted ID {id}");
             }
-            var Average = StudentsDataSimulation.studentsList.Average(Student => Student.Grade);
-            return Ok(Average);
+
+            var Student = StudentsDataSimulation.studentsList.FirstOrDefault(Student => Student.Id == id);
+            if(Student==null)
+            {
+                return NotFound($"The Id {id} Not Found");
+            }
+            return Ok(Student);
         }
     }
 }
